@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="booking.css">
+    <title>Booking - EasySports</title>
+    <link rel="icon" type="image/x-icon" href="imgs/icon.png">
+    <style>
+       
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Easy<span>Sports</span></div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="booking.html">Book Now</a></li>
+                    <li><a href="ourturf.html">Our Turfs</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="signin.html" class="signin-btn">Sign In</a></li>
+                </ul>
+                <div class="hamburger">☰</div>
+            </nav>
+        </div>
+    </header><br><br>
+<!-- Booking Form Section -->
+<section id="booking">
+    <div class="container">
+        <h2 class="section-title">Book Your Turf</h2>
+        <div class="booking-form">
+            <form name = "submit-to-google-sheet" action="#" method="POST" id="bookingForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="turf">Select Turf</label>
+                        <select id="turf" name="turf" required>
+                            <option value="premier">Premier Football Turf</option>
+                            <option value="cricket">Cricket Arena</option>
+                            <option value="tennis">Tennis Court</option>
+                            <option value="multi">Multi-Sport Complex</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="startTime">Start Time</label>
+                        <input type="time" id="startTime" name="startTime" required min="06:00" max="22:00">
+                        <p class="time-help">Bookings available from 6:00 AM to 10:00 PM</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="endTime">End Time</label>
+                        <input type="time" id="endTime" name="endTime" required min="07:00" max="23:00">
+                        <p class="time-help">Minimum booking: 1 hour</p>
+                    </div>
+                </div>
+                
+                <div class="booking-summary" id="bookingSummary" style="display: none;">
+                    <p>Booking Duration: <span class="booking-duration" id="bookingDuration">0 hours</span></p>
+                    <p>Estimated Price: <span id="estimatedPrice">$0</span></p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Special Requests</label>
+                    <textarea id="message" name="message" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn">Confirm Booking</button>
+            </form>
+            
+        </div>
+    </div>
+</section>
+<script>
+    // Add this JavaScript to your page, either inline or in a separate .js file
+
+document.addEventListener('DOMContentLoaded', function() {
+    const bookingForm = document.getElementById('bookingForm');
+    const startTimeInput = document.getElementById('startTime');
+    const endTimeInput = document.getElementById('endTime');
+    const bookingSummary = document.getElementById('bookingSummary');
+    const bookingDuration = document.getElementById('bookingDuration');
+    const estimatedPrice = document.getElementById('estimatedPrice');
+    
+    // Price per hour for different turfs (in rupees)
+    const priceRates = {
+        'premier': 2500,
+        'cricket': 2000,
+        'tennis': 1200,
+        'multi': 2500
+    };
+    
+    // Show booking summary when both times are selected
+    function updateBookingSummary() {
+        if (startTimeInput.value && endTimeInput.value) {
+            const startTime = new Date(`2000-01-01T${startTimeInput.value}`);
+            const endTime = new Date(`2000-01-01T${endTimeInput.value}`);
+            
+            // Check if end time is after start time
+            if (endTime <= startTime) {
+                alert('End time must be after start time');
+                endTimeInput.value = '';
+                bookingSummary.style.display = 'none';
+                return;
+            }
+            
+            // Calculate duration in hours
+            const durationMs = endTime - startTime;
+            const durationHours = durationMs / (1000 * 60 * 60);
+            
+            // Calculate price based on selected turf
+            const selectedTurf = document.getElementById('turf').value;
+            const hourlyRate = priceRates[selectedTurf] || 0;
+            const price = hourlyRate * durationHours;
+            
+            // Update summary
+            bookingDuration.textContent = `${durationHours} hour${durationHours !== 1 ? 's' : ''}`;
+            estimatedPrice.textContent = `₹ ${price.toFixed(2)}`;
+            bookingSummary.style.display = 'block';
+        }
+    }
+    
+    // Add event listeners for time inputs
+    startTimeInput.addEventListener('change', updateBookingSummary);
+    endTimeInput.addEventListener('change', updateBookingSummary);
+    document.getElementById('turf').addEventListener('change', updateBookingSummary);
+    
+    // Handle form submission
+    bookingForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent actual form submission
+        
+        // Basic validation
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const turf = document.getElementById('turf').value;
+        const date = document.getElementById('date').value;
+        
+        if (!name || !email || !phone || !turf || !date || !startTimeInput.value || !endTimeInput.value) {
+            alert('Please fill in all required fields');
+            return;
+        }
+        
+        // Create success message container
+        const successMessage = document.createElement('div');
+        successMessage.className = 'success-message';
+        successMessage.innerHTML = `
+            <div class="success-content">
+                <h3>Booked Successfully!</h3>
+                <p>Thank you ${name} for your booking.</p>
+                <p>You have booked the ${document.getElementById('turf').options[document.getElementById('turf').selectedIndex].text} 
+                   on ${new Date(date).toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}
+                   from ${startTimeInput.value} to ${endTimeInput.value}.</p>
+                <p>A confirmation email has been sent to ${email}.</p>
+                <button id="closeSuccessMsg" class="btn">Close</button>
+            </div>
+        `;
+        
+        // Add styles for the success message
+        successMessage.style.position = 'fixed';
+        successMessage.style.top = '0';
+        successMessage.style.left = '0';
+        successMessage.style.width = '100%';
+        successMessage.style.height = '100%';
+        successMessage.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+        successMessage.style.display = 'flex';
+        successMessage.style.justifyContent = 'center';
+        successMessage.style.alignItems = 'center';
+        successMessage.style.zIndex = '1000';
+        
+        const successContent = successMessage.querySelector('.success-content');
+        successContent.style.backgroundColor = '#fff';
+        successContent.style.padding = '30px';
+        successContent.style.borderRadius = '5px';
+        successContent.style.maxWidth = '500px';
+        successContent.style.textAlign = 'center';
+        
+        // Add success message to the body
+        document.body.appendChild(successMessage);
+        
+        // Close button functionality
+        document.getElementById('closeSuccessMsg').addEventListener('click', function() {
+            document.body.removeChild(successMessage);
+            bookingForm.reset();
+            bookingSummary.style.display = 'none';
+        });
+        
+        // In a real application, you would send the form data to the server here
+        console.log('Form submitted with data:', {
+            name, email, phone, turf, date, 
+            startTime: startTimeInput.value, 
+            endTime: endTimeInput.value
+        });
+    });
+});
+
+    // spread sheet
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbz6pPwYCyAWuAwI91kZz_68vOQ5mB2_flPjmyDEdWzghlAIld81tEeOHYqrLKPqCRrx/exec'
+                        const form = document.forms['submit-to-google-sheet']
+                        const msg = document.getElementById('msg')
+                        form.addEventListener('submit', e => {
+                          e.preventDefault()
+                          fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                            .then(response =>{
+                                msg.innerHTML = "Thank You for your message!"
+                                setTimeout(function() {
+                                    msg.innerHTML=""
+                                },5000)
+                                form.reset()
+                            })
+                            
+                            .catch(error => console.error('Error!', error.message))
+                        }) 
+
+</script>
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-about">
+                <div class="footer-logo">Turf<span>Book</span></div>
+                <p>TurfBook provides premium quality artificial turf for sports enthusiasts. Book your slot today and enjoy the game with your team.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="booking.html">Book Now</a></li>
+                    <li><a href="ourturf.html">Our Turfs</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Our Services</h3>
+                <ul>
+                    <li><a href="#">Football Turf</a></li>
+                    <li><a href="#">Cricket Pitch</a></li>
+                    <li><a href="#">Tennis Court</a></li>
+                    <li><a href="#">Multi-Sport Complex</a></li>
+                    <li><a href="#">Corporate Events</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Social Networks</h3>
+                <ul>
+                    <li><a href="https://www.facebook.com/profile.php?id=61575082027676&sk=about">Facebook</a></li>
+                    <li><a href="https://www.instagram.com/easysportz17/">Instagram</a></li>
+                    <li><a href="https://x.com/easyturfsports">Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 EasySports. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>EasySports-Turfbooking</title>
+    <link rel="icon" type="image/x-icon" href="imgs/icon.png">
+    <style>
+       
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Easy<span>Sports</span></div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="booking.html">Book Now</a></li>
+                    <li><a href="ourturf.html">Our Turfs</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="signin.html" class="signin-btn">Sign In</a></li>
+                </ul>
+               
+                <div class="hamburger">☰</div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Book Your Perfect Playing Field</h1>
+                <p>Experience premium quality artificial turf for football, cricket, tennis and more. Book your slot today and enjoy the game with your team.</p>
+                <div class="cta-buttons">
+                    <a href="booking.html" class="btn">Book Now</a>
+                    <a href="ourturf.html" class="btn btn-secondary">Explore Turfs</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+   
+    <!-- Gallery Section -->
+    <section id="gallery">
+        <div class="container">
+            <h2 class="section-title">Turf Gallery</h2>
+            <div class="gallery-grid">
+                <!-- Gallery items 1-6 -->
+                <div class="gallery-item">
+                    <img src="imgs/gal1.jpg" alt="Gallery Image 1">
+                    <div class="gallery-overlay">
+                        <span>🔍</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="imgs/gal2.jpg" alt="Gallery Image 2">
+                    <div class="gallery-overlay">
+                        <span>🔍</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="imgs/gal3.jpg" alt="Gallery Image 3">
+                    <div class="gallery-overlay">
+                        <span>🔍</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="imgs/gal4.jpg" alt="Gallery Image 4">
+                    <div class="gallery-overlay">
+                        <span>🔍</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="imgs/gal5.jpg" alt="Gallery Image 5">
+                    <div class="gallery-overlay">
+                        <span>🔍</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="imgs/gal6.jpg" alt="Gallery Image 6">
+                    <div class="gallery-overlay">
+                        <span>🔍</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><hr>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-text">
+                            <h3>Our Location</h3>
+                            <p>68 French Colony, White Town, Puducherry, 605001</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-text">
+                            <h3>Phone Number</h3>
+                            <p>+91 7092363234</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-text"> 
+                            
+                            <h3>Email Address</h3>
+                            <p>easysportsbooking@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">⏰</div>
+                        <div class="contact-text">
+                            <h3>Working Hours</h3>
+                            <p>Mon-Fri: 6:00 AM - 10:00 PM<br>Sat-Sun: 7:00 AM - 11:00 PM</p>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61575082027676&sk=about" class="social-link">f</a>
+                        <a href="https://x.com/easyturfsports" class="social-link">X</a>
+                        
+                        <a href="https://www.instagram.com/easysportz17/" class="social-link">ig</a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form name = "submit-to-google-sheet"action="#" method="POST">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Mobile</label>
+                            <input type="text" id="subject" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                        <span id="msg"></span>
+                    </form>   
+                      <script>
+                        const scriptURL = 'https://script.google.com/macros/s/AKfycbzn9nDc5CnYedORMLPXFFYTWwsAcgRdOrhtrVVWCxZ5LkBtlh80-CR5NjRLE6bbWdz4zg/exec'
+                        const form = document.forms['submit-to-google-sheet']
+                        const msg = document.getElementById('msg')
+                        form.addEventListener('submit', e => {
+                          e.preventDefault()
+                          fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                            .then(response =>{
+                                msg.innerHTML = "Thank You for your message!"
+                                setTimeout(function() {
+                                    msg.innerHTML=""
+                                },5000)
+                                form.reset()
+                            })
+                            
+                            .catch(error => console.error('Error!', error.message))
+                        })
+                      </script>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">Easy<span>Sports</span></div>
+                    <p>EasySports provides premium quality artificial turf for sports enthusiasts. Book your slot today and enjoy the game with your team.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="booking.html">Book Now</a></li>
+                        <li><a href="ourturf.html">Our Turfs</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Our Services</h3>
+                    <ul>
+                        <li><a href="football.html">Football Turf</a></li>
+                        <li><a href="#">Cricket Pitch</a></li>
+                        <li><a href="#">Tennis Court</a></li>
+                        <li><a href="#">Multi-Sport Complex</a></li>
+                        <li><a href="#">Corporate Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Social Networks</h3>
+                    <ul>
+                        <li><a href="https://www.facebook.com/profile.php?id=61575082027676&sk=about">Facebook</a></li>
+                        <li><a href="https://www.instagram.com/easysportz17/">Instagram</a></li>
+                        <li><a href="https://x.com/easyturfsports">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 EasySports. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+       

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Gallery - EasySports</title>
+    <link rel="icon" type="image/x-icon" href="imgs/icon.png">
+    <style>
+        /* Gallery Page Specific Styles */
+        .gallery-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('imgs/turf.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+            margin-bottom: 50px;
+            margin-top: 30px;
+            height:90vh;
+        }
+        
+        .gallery-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .gallery-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .gallery-categories {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 70px;
+            margin-top: 0px;
+        }
+        
+        .category-btn {
+            background: none;
+            border: 2px solid #4CAF50;
+            color: #4CAF50;
+            padding: 8px 20px;
+            margin: 0 10px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            height: 300px;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.02);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-overlay h3 {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .gallery-overlay p {
+            margin-bottom: 15px;
+        }
+        
+        .view-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        /* Lightbox styles */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 80%;
+            max-height: 80%;
+        }
+        
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 80vh;
+            border: 5px solid white;
+        }
+        
+        .close-lightbox {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        
+        .lightbox-caption {
+            color: white;
+            text-align: center;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .gallery-categories {
+                flex-wrap: wrap;
+            }
+            
+            .category-btn {
+                margin: 5px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Easy<span>Sports</span></div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="booking.html">Book Now</a></li>
+                    <li><a href="ourturf.html">Our Turfs</a></li>
+                    <li><a href="gallery.html" class="active">Gallery</a></li>
+                    <li><a href="signin.html" class="signin-btn">Sign In</a></li>
+                </ul>
+               
+                <div class="hamburger">☰</div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Gallery Hero Section -->
+    <section class="gallery-hero">
+        <div class="container">
+            <h1>OUR TURf<br> GALLERY</h1>
+            <p>Explore our world-class facilities through our photo gallery. Get a glimpse of the premium turfs and amenities that make EasySports the perfect venue for your sporting events.</p>
+        </div>
+    </section>
+
+    <!-- Gallery Main Section -->
+    <section id="gallery-main">
+        <div class="container">
+            <!-- Gallery Filter Categories -->
+            <div class="gallery-categories">
+                <button class="category-btn active" data-category="all">All</button>
+                <button class="category-btn" data-category="football">Football</button>
+                <button class="category-btn" data-category="cricket">Cricket</button>
+                <button class="category-btn" data-category="tennis">Tennis</button>
+                <button class="category-btn" data-category="events">Events</button>
+            </div>
+            
+            <!-- Gallery Grid -->
+            <div class="gallery-grid">
+                <!-- Football Turf Images -->
+                <div class="gallery-item" data-category="football">
+                    <img src="imgs/prefoot.jpg" alt="Football Turf">
+                    <div class="gallery-overlay">
+                        <h3>Premier Football Turf</h3>
+                        <p>Our FIFA approved football turf with high-quality artificial grass</p>
+                        <button class="view-btn">View Larger</button>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="football">
+                    <img src="imgs/activefoot.jpg" alt="Football Match">
+                    <div class="gallery-overlay">
+                        <h3>Football Match in Progress</h3>
+                        <p>Local teams enjoying our premium football facilities</p>
+                        <button class="view-btn">View Larger</button>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="football">
+                    <img src="imgs/nightfoot.jpg" alt="Night Football">
+                    <div class="gallery-overlay">
+                        <h3>Night Football Session</h3>
+                        <p>Play under floodlights with our evening bookings</p>
+                        <button class="view-btn">View Larger</button>
+                    </div>
+                </div>
+                
+                <!-- Cricket Turf Images -->
+                <div class="gallery-item" data-category="cricket">
+                    <img src="imgs/arena.jpg" alt="Cricket Pitch">
+                    <div class="gallery-overlay">
+                        <h3>Cricket Arena</h3>
+                        <p>Professional cricket pitch with true bounce and perfect outfield</p>
+                        <button class="view-btn">View Larger</button>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="cricket">
+                    <img src="imgs/gal2.jpg" alt="Cricket Practice">
+                    <div class="gallery-overlay">
+                        <h3>Cricket Practice Nets</h3>
+                        <p>Dedicated practice facilities for batting and bowling</p>
+                        <button class="view-btn">View Larger</button>
+                    </div>
+                </div>
+                
+                <!-- Tennis Court Images -->
+                <div class="gallery-item" data-category="tennis">
+                    <img src="imgs/gal6.jpg" alt="Tennis Court">
+                    <div class="gallery-overlay">
+                        <h3>Tennis Courts</h3>
+                        <p>Professional-grade tennis courts with perfect surface</p>
+                        <button class="view-btn">View Larger</button>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="tennis">
+                    <img src="imgs/tennismatch.jpg" alt="Tennis Match">
+                    <div class="gallery-overlay">
+                        <h3>Tennis Match</h3>
+                        <p>Enjoy competitive matches on our well-maintained courts</p>
+                        <button class="view-btn">View Larger</button>
+                    </div>
+                </div>
+                
+                <!-- Events Images -->
+                <div class="gallery-item" data-category="events">
+                    <img src="imgs/tour.jpg" alt="Tournament">
+                    <div class="gallery-overlay">
+                        <h3>Corporate Tournament</h3>
+                        <p>Host your corporate sports events with our complete packages</p>
+                        <button class="view-btn">View Larger</button>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="events">
+                    <img src="imgs/award.jpg" alt="Award Ceremony">
+                    <div class="gallery-overlay">
+                        <h3>Award Ceremony</h3>
+                        <p>Celebrate victories with our event hosting facilities</p>
+                        <button class="view-btn">View Larger</button>
+                    </div>
+                </div>
+                
+                <!-- Add more gallery items as needed -->
+                <div class="gallery-item" data-category="football">
+                    <img src="imgs/kidsfoot.png" alt="Kids Football Training">
+                    <div class="gallery-overlay">
+                        <h3>Kids Football Training</h3>
+                        <p>Special training programs for young athletes</p>
+                        <button class="view-btn">View Larger</button>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="cricket">
+                    <img src="imgs/coach.jpg" alt="Cricket Coaching">
+                    <div class="gallery-overlay">
+                        <h3>Cricket Coaching</h3>
+                        <p>Professional coaching sessions available</p>
+                        <button class="view-btn">View Larger</button>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="events">
+                    <img src="imgs/sportsday.jpg" alt="School Sports Day">
+                    <div class="gallery-overlay">
+                        <h3>School Sports Day</h3>
+                        <p>Perfect venue for school sports events and competitions</p>
+                        <button class="view-btn">View Larger</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox for full-size image viewing -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="close-lightbox">&times;</span>
+            <img src="" alt="" class="lightbox-img">
+            <div class="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">Easy<span>Sports</span></div>
+                    <p>EasySports provides premium quality artificial turf for sports enthusiasts. Book your slot today and enjoy the game with your team.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="booking.html">Book Now</a></li>
+                        <li><a href="ourturf.html">Our Turfs</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Our Services</h3>
+                    <ul>
+                        <li><a href="#">Football Turf</a></li>
+                        <li><a href="#">Cricket Pitch</a></li>
+                        <li><a href="#">Tennis Court</a></li>
+                        <li><a href="#">Multi-Sport Complex</a></li>
+                        <li><a href="#">Corporate Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Social Networks</h3>
+                    <ul>
+                        <li><a href="https://www.facebook.com/profile.php?id=61575082027676&sk=about">Facebook</a></li>
+                        <li><a href="https://www.instagram.com/easysportz17/">Instagram</a></li>
+                        <li><a href="https://x.com/easyturfsports">Twitter</a></li>
+                    </ul>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 EasySports. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Gallery Filtering
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.querySelector('.lightbox-img');
+            const lightboxCaption = document.querySelector('.lightbox-caption');
+            const closeLightbox = document.querySelector('.close-lightbox');
+            const viewButtons = document.querySelectorAll('.view-btn');
+            
+            // Category filtering
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const category = this.getAttribute('data-category');
+                    
+                    // Show/hide gallery items based on category
+                    galleryItems.forEach(item => {
+                        if (category === 'all' || item.getAttribute('data-category') === category) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Lightbox functionality
+            viewButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const galleryItem = this.closest('.gallery-item');
+                    const img = galleryItem.querySelector('img');
+                    const title = galleryItem.querySelector('h3').textContent;
+                    const desc = galleryItem.querySelector('p').textContent;
+                    
+                    lightboxImg.src = img.src;
+                    lightboxImg.alt = img.alt;
+                    lightboxCaption.innerHTML = `<h3>${title}</h3><p>${desc}</p>`;
+                    lightbox.style.display = 'flex';
+                });
+            });
+            
+            // Close lightbox
+            closeLightbox.addEventListener('click', function() {
+                lightbox.style.display = 'none';
+            });
+            
+            // Also close when clicking outside the image
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    lightbox.style.display = 'none';
+                }
+            });
+            
+            // Mobile menu toggle
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (hamburger) {
+                hamburger.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
