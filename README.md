@@ -28,7 +28,7 @@ EasySports is a web-based platform designed to simplify the process of booking s
 ---
 
 ## 📂 Folder Structure
-for google sheets you can add this js code in - google sheets --> extension --> appscript -->then paste it before that create a developement in sheets then copy the web url and paste it in booking.html inside script tag --> script url = " paste here "
+for google sheets you can add this js code in - google sheets --> extension --> appscript -->then paste it "
 
 var sheetName = 'Sheet1'
 var scriptProp = PropertiesService.getScriptProperties()
@@ -70,3 +70,6 @@ function doPost (e) {
     lock.releaseLock()
   }
 }
+
+
+before that create a developement in sheets then copy the web url and paste it in booking.html inside script tag --> script url = " paste here 
